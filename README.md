@@ -1,4 +1,5 @@
-```usage: lvenv [-h] [--system-site-packages] [--symlinks | --copies] [--clear] [--upgrade] [--without-pip]
+```
+usage: lvenv [-h] [--system-site-packages] [--symlinks | --copies] [--clear] [--upgrade] [--without-pip]
              [--prompt PROMPT] [--upgrade-deps]
              ENV_DIR
 
