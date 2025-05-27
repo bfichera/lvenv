@@ -105,6 +105,7 @@ from pathlib import Path
 from datetime import datetime
 import argparse
 import sys
+import atexit
 
 
 def makelog():
@@ -138,7 +139,7 @@ if sys.argv[0] and sys.argv[0] != '-m':
         f'\nInitialized python call.\n'
         f'FILENAME: {getfilepath().as_posix()}\n'
         f'ARGV: {getargs()}\n'
-        f'FILE CONTENTS: {getfilecontents()}'
+        f'FILE CONTENTS:\n{getfilecontents()}'
     )
 
     logpath = makelog()
@@ -160,7 +161,12 @@ if sys.argv[0] and sys.argv[0] != '-m':
     rootlogger = logging.getLogger()
     rootlogger.setLevel(logging.INFO)
     rootlogger.addHandler(filehandler)
-    rootlogger.info(startmsg)"""
+    rootlogger.info(startmsg)
+
+    def on_exit():
+        rootlogger.info('Exiting')
+
+    atexit.register(on_exit)"""
 
 for site_packages in Path.cwd().glob(
     cfg.ENV_DIR+'/lib'+'/python*'+'/site-packages'
