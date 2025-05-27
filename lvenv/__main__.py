@@ -3,10 +3,12 @@ from pathlib import Path
 import argparse
 
 parser = argparse.ArgumentParser(
-    prog='venv',
+    prog='lvenv',
     description=(
         'Creates virtual Python environments in'
-        ' one or more target directories.'
+        ' one or more target directories. Overrides the root logger in such'
+        ' away that all logging.info, logging.warnings, ... calls are written'
+        ' to a file in the project directory / .log'
     )
 )
 parser.add_argument(
