@@ -105,9 +105,9 @@ except Exception:
 sitecustomize_py_text = r"""import logging
 from pathlib import Path
 from datetime import datetime
-import argparse
 import sys
 import atexit
+import subprocess
 
 
 def get_git_hash():
