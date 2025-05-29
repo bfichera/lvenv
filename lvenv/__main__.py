@@ -133,7 +133,7 @@ def getfilecontents():
         return fh.read()
 
 
-if sys.argv[0] and sys.argv[0] != '-m':
+if sys.argv[0] and not sys.argv[0].startswith('-'):
 
     startmsg = (
         f'\nInitialized python call.\n'
