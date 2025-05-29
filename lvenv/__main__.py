@@ -1,6 +1,8 @@
 from venv import create
+import subprocess
 from pathlib import Path
 import argparse
+
 
 parser = argparse.ArgumentParser(
     prog='lvenv',
@@ -108,6 +110,17 @@ import sys
 import atexit
 
 
+def get_git_hash():
+    r = subprocess.run(
+        ['git', 'rev-parse', 'HEAD'],
+        capture_output=True,
+        text=True,
+    )
+    if r.returncode != 0:
+        return
+    return r.stdout.strip()
+
+
 def makelog():
     now = datetime.now()
     datefmt = f'{now.year}_{now.month:02d}_{now.day:02d}'
@@ -138,6 +151,7 @@ if sys.argv[0] and not sys.argv[0].startswith('-'):
     startmsg = (
         f'\nInitialized python call.\n'
         f'FILENAME: {getfilepath().as_posix()}\n'
+        f'COMMIT: {get_git_hash()}\n'
         f'ARGV: {getargs()}\n'
         f'FILE CONTENTS:\n{getfilecontents()}'
     )
