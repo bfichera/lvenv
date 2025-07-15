@@ -108,6 +108,7 @@ from datetime import datetime
 import sys
 import atexit
 import subprocess
+from pip._internal.operations.freeze import freeze
 
 
 def get_git_hash():
@@ -146,6 +147,10 @@ def getfilecontents():
         return fh.read()
 
 
+def fmtfreeze():
+    return '    \n'.join(freeze())
+
+
 if sys.argv[0] and not sys.argv[0].startswith('-'):
 
     startmsg = (
@@ -153,6 +158,7 @@ if sys.argv[0] and not sys.argv[0].startswith('-'):
         f'FILENAME: {getfilepath().as_posix()}\n'
         f'COMMIT: {get_git_hash()}\n'
         f'ARGV: {getargs()}\n'
+        f'REQUIREMENTS:\n{fmtfreeze()}\n'
         f'FILE CONTENTS:\n{getfilecontents()}'
     )
 
