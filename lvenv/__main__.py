@@ -1,5 +1,4 @@
 from venv import create
-import subprocess
 from pathlib import Path
 import argparse
 
@@ -105,6 +104,7 @@ except Exception:
 sitecustomize_py_text = r"""import logging
 from pathlib import Path
 from datetime import datetime
+import socket
 import sys
 import atexit
 import subprocess
@@ -124,12 +124,16 @@ def get_git_hash():
 
 def makelog():
     now = datetime.now()
-    datefmt = f'{now.year}_{now.month:02d}_{now.day:02d}'
+    datefmt = (
+        f'{now.year}_{now.month:02d}_{now.day:02d}_{now.hour:02d}'
+        f'_{now.minute:02d}_{now.second:02d}_{now.microsecond}'
+    )
+    hostname = socket.gethostname()
     logdir = Path.cwd() / '.log'
     if not logdir.exists():
         logdir.mkdir()
     c = len(list(logdir.glob(datefmt+'*'+'.log')))+1
-    logpath = logdir / f'{datefmt}_{c:04d}.log'
+    logpath = logdir / f'{datefmt}_{hostname}_{c:04d}.log'
     return logpath
 
 
